@@ -5,39 +5,22 @@
  */
 package Interfaz.Desktop;
 
-import AccesoDatos.ServicioProducto;
 import java.awt.Color;
 import javax.swing.JOptionPane;
-import Control.Control;
-import LogicaNegocio.Producto;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Fernando
  */
 public class Desktop extends javax.swing.JFrame {
-    private final Control control;
+
     /**
      * Creates new form Productos
-     * @param co
      */
-    public Desktop(Control co) {
-        control=co;
+    public Desktop() {
         initComponents();
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,7 +101,7 @@ public class Desktop extends javax.swing.JFrame {
 
         jLabel5.setText("Tipo");
 
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Popular", "Canasta Basica", "Suntuario" }));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Popular", "Canasta Básica", "Suntuario", "Otro" }));
 
         agregarBtn.setText("Agregar");
         agregarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -281,10 +264,9 @@ public class Desktop extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreFldActionPerformed
 
     private void buscarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTipoActionPerformed
-//        if(tipoCmbox.getSelectedItem().toString().equals("")){
-//            JOptionPane.showMessageDialog(null, "Seleccione un tipo"); 
-//        }
-//        buscarPorTipo(tipoCmbox.getSelectedItem().toString());
+        if(tipoCmbox.getSelectedItem().toString().equals("")){
+            JOptionPane.showMessageDialog(null, "Seleccione un tipo");     
+        }
     }//GEN-LAST:event_buscarTipoActionPerformed
 
     private void buscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarNombreActionPerformed
@@ -295,108 +277,14 @@ public class Desktop extends javax.swing.JFrame {
 
     private void agregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarBtnActionPerformed
         if(validar() != 0){
-            control.agregarProducto(Integer.parseInt(codigoTxt.getText()), nomFld.getText(), checkbox1.getState(), new BigDecimal(precioFld.getText()), String.valueOf(comboTipo.getSelectedItem()));
+            //Agregar nuevo producto
         }
     }//GEN-LAST:event_agregarBtnActionPerformed
 
     private void tipoCmboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoCmboxActionPerformed
-//        cargarTabla(comboTipo.getSelectedItem().toString());
+        // TODO add your handling code here:
     }//GEN-LAST:event_tipoCmboxActionPerformed
 
-    
-    public void mostrarProductos(ArrayList<Producto> list) {
-        
-        DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
-        Object[] row = new Object[5];
-        for(int i=0; i<list.size(); i++){
-            row[0]=list.get(i).getNombre();
-            row[1]=list.get(i).getImportado();
-            row[2]=list.get(i).getPrecio();
-            row[3]=list.get(i).getTipo();
-            row[4]=list.get(i).getPrecioFinal();
-            model.addRow(row);
-        }
-    }
-    
-    
-//    public void cargarDB() {
-//        try {
-//            Connection con=null;
-//            Class.forName("com.mysql.jdbc.Driver");
-//            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Lab1BD","root","root");
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery("show databases;");
-//            tipoCmbox.removeAllItems();
-//            while(rs.next()){
-//                tipoCmbox.addItem(rs.getString(1));
-//            }
-//        rs.close();
-//        con.close();
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//    }
-//    public void cargarTabla(String bd){
-//        try {
-//            Connection con=null;
-//            Class.forName("com.mysql.jdbc.Drive");
-//            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Lab1BD","root","root");
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery("show table;");
-//            tipoCmbox.removeAllItems();
-//            while(rs.next()){
-//               tipoCmbox.addItem(rs.getString(1));
-//            }
-//            rs.close();
-//            con.close();
-//        
-//        
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
-//     public void buscarPorTipo(String db){ 
-//        
-//        String columnas, sql; 
-//        try {
-//             Connection con=null;
-//             Class.forName("com.mysql.jdbc.Driver");
-//             con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Lab1BD","root","root");
-//             Statement st =con.createStatement();
-//             
-//             sql="Select * from" + db;
-//             
-//             ResultSet rs= st.executeQuery(sql);
-//             ResultSetMetaData rsmd = rs.getMetaData();
-//             int col = rsmd.getColumnCount();
-//             DefaultTableModel modelo = new DefaultTableModel();
-//             
-//             for(int i =1 ; i<= col; i++){
-//                 modelo.addColumn(rsmd.getColumnLabel(i));
-//             }
-//             while(rs.next()){
-//              String filas[]= new String[col];
-//              for(int j = 0; j<col; j++){
-//                  filas[j]=rs.getString(j+1);
-//                  }
-//              modelo.addRow(filas);
-//             }
-//             jTable2.setModel(modelo);
-//             rs.close();
-//             con.close();
-//             
-//         
-//         } catch (ClassNotFoundException | SQLException ex) {
-//             Logger.getLogger(ServicioProducto.class.getName()).log(Level.SEVERE, null, ex);
-//         }
-//        
-//    }
     
     private int validarBuscador(){
         if(nombreFld.getText().isEmpty()){
@@ -433,6 +321,38 @@ public class Desktop extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Desktop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Desktop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Desktop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Desktop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Desktop().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarBtn;
